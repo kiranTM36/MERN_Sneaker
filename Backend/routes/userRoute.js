@@ -57,4 +57,63 @@ router.post('/login', async (req, res) => {
     }
 })
 
+router.get('/all' , async(req, res)=> {
+    try {
+        const response = await userModel.find()
+        if(response.length === 0){
+            return res.status(404).json({
+                message : "No user have Joined"
+            })
+        }
+
+        res.status(200).json({
+            message : "List of User ",
+            user : response
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: "SomeThing Went Wrong",
+        })
+    }
+})
+
+router.put('/edit/:id', async(req , res)=> {
+    try {
+        const { id } = req.params
+        const data = req.body
+        const user = await userModel.findByIdAndUpdate(id , data , {
+            new : true , runValidators : true
+        })
+
+        res.status(200).json({
+            message : "User Update data Sucessfully"
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: "SomeThing Went Wrong",
+        })
+    }
+})
+
+router.delete('/delete/:id' , async(req , res) => {
+    try {
+        const user = await userModel.findByIdAndDelete(req.params.id)
+
+        if(!user){
+            return res.status(400).json({
+                message : "Cannot Delete user"
+            })
+        }
+        res.status(200).json({
+            message : "user Deleted Sucessfully"
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({
+            message: "SomeThing Went Wrong",
+        })
+    }
+})
 module.exports = router

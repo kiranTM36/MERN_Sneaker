@@ -1,0 +1,11 @@
+const mongoose = require('mongoose')
+
+const categorySchema = new mongoose.Schema({
+    cName : {
+        type : string,
+        required : true,
+        unique : true
+    }
+})
+
+module.exports = mongoose.model('category', categorySchema)
