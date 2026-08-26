@@ -2,6 +2,7 @@ const userModel = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const router = require('express').Router()
 const bcrypt = require('bcrypt')
+const { authenticateUser, authorizeRoles } = require('../middleware/authenticate')
 
 router.post('/signup', async (req, res) => {
     try {
@@ -78,25 +79,42 @@ router.get('/all' , async(req, res)=> {
     }
 })
 
-router.put('/edit/:id', async(req , res)=> {
+router.put('/edit/:id', authenticateUser, async (req, res) => {
     try {
-        const { id } = req.params
-        const data = req.body
-        const user = await userModel.findByIdAndUpdate(id , data , {
-            new : true , runValidators : true
-        })
+        const { id } = req.params;
 
-        res.status(200).json({
-            message : "User Update data Sucessfully"
-        })
+        if (req.user._id.toString() !== id && req.user.role !== 'admin') {
+            return res.status(403).json({
+                message: "Forbidden: You can only edit your own account."
+            });
+        }
+
+        const { password, role, ...updateData } = req.body;
+
+        const updatedUser = await userModel.findByIdAndUpdate(
+            id,
+            updateData,
+            { new: true, runValidators: true }
+        ).select('-password');
+
+        if (!updatedUser) {
+            return res.status(404).json({
+                message: "User not found."
+            });
+        }
+
+        return res.status(200).json({
+            message: "User updated successfully",
+            user: updatedUser
+        });
     } catch (error) {
-        console.log(error)
-        res.status(500).json({
-            message: "SomeThing Went Wrong",
-        })
+        console.error(error);
+        return res.status(500).json({
+            message: "Something went wrong",
+            error: error.message
+        });
     }
-})
-
+});
 router.delete('/delete/:id' , async(req , res) => {
     try {
         const user = await userModel.findByIdAndDelete(req.params.id)
@@ -116,4 +134,23 @@ router.delete('/delete/:id' , async(req , res) => {
         })
     }
 })
+
+router.get('/profile', authenticateUser, authorizeRoles('admin', 'customer'), async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.status(404).json({ message: 'User profile not found.' });
+        }
+
+        return res.status(200).json({
+            success: true,
+            user: req.user
+        });
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: 'Error fetching profile',
+            error: error.message
+        });
+    }
+});
 module.exports = router

@@ -1,43 +1,48 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const productSchema = new mongoose.Schema({
-    productName : {
-        type : String,
-        match : [/^[a-zA-Z]+$/,'product can only contains letters'],
-        required : true,
-        trim : true,
-        unique : [true , "Product should be Unique to each Other"]
+const productSchema = new mongoose.Schema(
+  {
+    productName: {
+      type: String,
+      required: [true, 'Product name is required'],
+      trim: true,
+      unique: true,
+      match: [/^[a-zA-Z0-9\s\-]+$/, 'Product name can only contain letters, numbers, spaces, and hyphens'],
     },
 
-    categoryId : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : 'category',
-        required : [true, "Category of Product should be Defined"]
+    categoryId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'category',
+      required: [true, 'Category of Product should be Defined'],
     },
 
-    price : {
-        type : Number,
-        required : true,
-        default : 0
+    price: {
+      type: Number,
+      required: [true, 'Price is required'],
+      min: [0, 'Price cannot be negative'],
+      default: 0,
     },
 
-    image : {
-        type : String,
-        trim : true,
-        default : ""
+    image: {
+      type: String,
+      trim: true,
+      default: '',
     },
 
-    description : {
-        type : String,
-        trim : true,
-        maxLength : [1000, "Length Of Description cannot be More than Thousand"]
+    description: {
+      type: String,
+      trim: true,
+      maxLength: [1000, 'Length of Description cannot be more than 1000 characters'],
     },
 
-    quantity : {
-        type : Number,
-        required : true,
-        default : [0, "Quantity of Product cannot Negative"]
-    }
-})
+    quantity: {
+      type: Number,
+      required: [true, 'Quantity is required'],
+      min: [0, 'Quantity of product cannot be negative'],
+      default: 0,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('products', productSchema)
+module.exports = mongoose.model('products', productSchema);
