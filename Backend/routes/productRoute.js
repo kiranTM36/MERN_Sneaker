@@ -2,15 +2,16 @@ const router = require('express').Router()
 const productModel = require('../models/productModel')
 const multer = require('../middleware/multer')
 
-router.post('/new/add', multer.single('image'), async (req, res) => {
+router.post('/new/add', multer.array('images',2), async (req, res) => {
     try {
         const { productName, categoryId, price, description, quantity } = req.body
+        const imageFilenames = req.files ? req.files.map(file => file.filename) : []
 
         const newProduct = new productModel({
             productName,
             categoryId,
             price,
-            image: req.file ? req.file.filename : "",
+            images: imageFilenames,
             description,
             quantity
         })
@@ -44,7 +45,7 @@ router.post('/new/add', multer.single('image'), async (req, res) => {
     }
 })
 
-router.get('/all/product', async(req , res)=> {
+router.get('/all/products', async(req , res)=> {
     try {
         const response = await productModel.find().populate('categoryId')
         if(response.length === 0){

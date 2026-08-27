@@ -1,6 +1,8 @@
 import HeroImg from '../image/Shoe.avif'
 import HeroCard from './HeroCard'
+
 const Hero = () => {
+
   return (
     <div className="bg-black h-[85vh] w-full rounded-3xl bg-cover" style={{backgroundImage : `url(${HeroImg})`}}>
         <div className='absolute top-[20vh] left-[10vh]'>

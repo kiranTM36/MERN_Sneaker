@@ -7,7 +7,7 @@ interface product {
     name : string,
     price : number,
     description : string,
-    image : string
+    images : string[]
 }
 
 interface productState {
@@ -47,7 +47,7 @@ export function getProducts(){
         dispatch(setStatus(STATUSES.LOADING))
 
         try {
-            const response = await axios.get("")
+            const response = await axios.get("http://localhost:7700/product/all/products")
             dispatch(setProducts(response.data))
             dispatch(setStatus(STATUSES.SUCCESS))
         } catch (error) {

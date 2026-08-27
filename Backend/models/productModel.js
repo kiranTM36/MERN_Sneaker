@@ -23,11 +23,11 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
 
-    image: {
+    images: [{
       type: String,
       trim: true,
       default: '',
-    },
+    }],
 
     description: {
       type: String,

@@ -6,6 +6,7 @@ import KidPage from "./pages/KidPage";
 import AllProductPage from "./pages/AllProductPage";
 import ProductPage from "./pages/ProductPage";
 import Login from "./auth/Login";
+import FemaleSection from "./pages/FemaleSection";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="product" element={<ProductPage />}>
             <Route index element={<AllProductPage />} />
             <Route path="kids" element={<KidPage />} />
+            <Route path="female" element={<FemaleSection />} />
           </Route>
 
         </Route>
