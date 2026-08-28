@@ -4,7 +4,7 @@ const FilterProduct = (props : {name : string, children:React.ReactNode}) => {
   return (
     <div>
         <div>FilterProduct</div>
-        <div className='flex justify-center flex-wrap'>
+        <div className='flex justify-center flex-wrap gap-5'>
             {props.children}
         </div>
     </div>

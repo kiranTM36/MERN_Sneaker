@@ -1,19 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
-import type { AppDispatch, RootState } from "../store/store";
-import { useEffect } from "react";
-import { getProducts } from "../store/productSlice";
 
 const ProductPage = () => {
-  const dispatch = useDispatch<AppDispatch>()
 
-  const {products , status} = useSelector((state : RootState) => state.product)
-
-  useEffect(()=> {
-    dispatch(getProducts())
-  },[dispatch])
-
-  console.log(status , products)
   return (
     <div className="h-[90vh] w-full flex justify-center items-center">
 

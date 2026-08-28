@@ -3,6 +3,7 @@ require('./db')
 const app =express()
 const cors = require('cors')
 
+
 //IMPORT MODEL
 const userModel = require('./models/userModel')
 const productModel = require('./models/productModel')
@@ -17,6 +18,8 @@ app.use(cors({
     origin : "http://localhost:5173",
     credentials : true
 }))
+
+app.use('/uploads', express.static('uploads'))
 
 app.use(express.urlencoded({extended : true}))
 app.use(express.json())

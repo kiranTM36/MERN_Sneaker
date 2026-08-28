@@ -7,6 +7,7 @@ import AllProductPage from "./pages/AllProductPage";
 import ProductPage from "./pages/ProductPage";
 import Login from "./auth/Login";
 import FemaleSection from "./pages/FemaleSection";
+import SingleProduct from "./pages/singleProduct";
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
 
         </Route>
 
+        <Route path="/product/:id" element={<SingleProduct />} />
         <Route path="/login" element={<Login />} />
 
       </Routes>

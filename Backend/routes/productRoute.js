@@ -2,16 +2,15 @@ const router = require('express').Router()
 const productModel = require('../models/productModel')
 const multer = require('../middleware/multer')
 
-router.post('/new/add', multer.array('images',2), async (req, res) => {
+router.post('/new/add', multer.single('image'), async (req, res) => {
     try {
         const { productName, categoryId, price, description, quantity } = req.body
-        const imageFilenames = req.files ? req.files.map(file => file.filename) : []
 
         const newProduct = new productModel({
             productName,
             categoryId,
             price,
-            images: imageFilenames,
+            image : req.file ? req.file.filename : null,
             description,
             quantity
         })
@@ -116,13 +115,14 @@ router.put('/update/:id', async (req, res) => {
 
 router.get('/:id', async(req, res)=> {
     try {
-        const response = await productModel.findById(req.params.id)
-
+        const response = await productModel.findById(req.params.id).populate('categoryId')
         if(!response){
             return res.status(404).json({
                 message : "404 Product Not Found",
             })
         }
+
+        console.log(response)
 
         res.status(200).json({
             message : "Product Found",
