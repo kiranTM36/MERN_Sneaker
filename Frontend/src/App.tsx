@@ -7,13 +7,12 @@ import AllProductPage from "./pages/AllProductPage";
 import ProductPage from "./pages/ProductPage";
 import Login from "./auth/Login";
 import FemaleSection from "./pages/FemaleSection";
-import SingleProduct from "./pages/singleProduct";
+import SingleProduct from "./pages/SingleProduct";
 
 const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route path="/" element={<Home />}>
           <Route index element={<HeroLayut />} />
 
@@ -21,13 +20,13 @@ const App = () => {
             <Route index element={<AllProductPage />} />
             <Route path="kids" element={<KidPage />} />
             <Route path="female" element={<FemaleSection />} />
+            
+            <Route path="*/product/:id" element={<SingleProduct />} />
           </Route>
-
         </Route>
 
         <Route path="/product/:id" element={<SingleProduct />} />
         <Route path="/login" element={<Login />} />
-
       </Routes>
     </BrowserRouter>
   );

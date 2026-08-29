@@ -20,7 +20,7 @@ const KidPage = () => {
       <FilterProduct name="Kids" >
         {
           products.map((product) => (
-            <Link to={`product/${product._id}`} key={product._id} >
+            <Link to={`/product/${product._id}`} key={product._id} >
               <Card key={product._id} product={product} />
             </Link>
           ))

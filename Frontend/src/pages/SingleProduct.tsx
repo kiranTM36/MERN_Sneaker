@@ -21,20 +21,20 @@ const SingleProduct = () => {
             {product && (
                 <div className='relative flex flex-col md:flex-row h-auto md:h-[80vh] w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden bg-white p-4 gap-6'>
                     
-                    {/* Image & Category Tag */}
+                    
                     <div className='relative h-64 md:h-full w-full md:w-1/2'>
                         <img 
                             src={`http://localhost:7700/uploads/${product.image}`} 
                             alt={product.productName} 
                             className='h-full w-full object-cover rounded-2xl' 
                         />
-                        {/* Access categoryName safely */}
+                       
                         <div className='absolute z-10 top-4 left-4 bg-white/90 text-black font-semibold rounded-md px-3 py-1 shadow-md'>
                             {typeof product.categoryId === 'object' ? product.categoryId.categoryName : ''}
                         </div>
                     </div>
 
-                    {/* Product Info */}
+                    
                     <div className='flex flex-col justify-between w-full md:w-1/2 p-2'>
                         <div>
                             <h1 className='text-3xl font-bold text-gray-800 mb-2'>{product.productName}</h1>

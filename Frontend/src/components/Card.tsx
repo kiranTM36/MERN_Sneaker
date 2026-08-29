@@ -1,4 +1,7 @@
 import { useLocation } from 'react-router-dom'
+import { addToCart } from '../store/cartSlice'
+import { useDispatch } from 'react-redux'
+import type { AppDispatch } from '../store/store'
 
 interface Product {
     _id: string
@@ -11,12 +14,15 @@ interface Product {
 const Card = ({ product }: { product: Product }) => {
 
     const location = useLocation()
+    const dispatch = useDispatch<AppDispatch>()
 
     const showButton = location.pathname !== '/'
 
     const handleAddtoCart = (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault()
         e.stopPropagation()
+        dispatch(addToCart(product))
+        alert('Product added to Cart')
     }
 
     if (!product) return null;
@@ -30,7 +36,7 @@ const Card = ({ product }: { product: Product }) => {
                     alt={product.productName}
                     className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 "
                 />
-                <span className="bg-white p-1 rounded-md absolute top-[1vh] left-[1vh] z-10">
+                <span className="bg-white p-1 rounded-md absolute top-[1vh] left-[1vh] z-3">
                     Shoes
                 </span>
 

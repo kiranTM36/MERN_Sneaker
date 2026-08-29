@@ -1,15 +1,15 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-interface product {
+interface  product {
     _id : string,
-    name : string,
+    productName : string,
     price : number,
     description : string,
     image : string
 }
 
 interface cartItem extends product {
-    quantity : number
+    cartQuantity : number
 }
 
 interface cartState {
@@ -30,11 +30,11 @@ const cartSlice = createSlice({
             const existingItem = state.items.find((item) => item._id === action.payload._id )
 
             if(existingItem){
-                existingItem.quantity += 1
+                existingItem.cartQuantity += 1
             }else{
                 state.items.push({
                     ...action.payload,
-                    quantity : 1
+                    cartQuantity : 1
                 })
             }
         },
@@ -47,14 +47,14 @@ const cartSlice = createSlice({
             const item = state.items.find((item) =>  item._id === action.payload)
 
             if(item){
-                item.quantity += 1
+                item.cartQuantity += 1
             }
         },
         decreaseQuantity(state, action : PayloadAction<string>){
             const item = state.items.find((item) =>  item._id === action.payload)
 
-            if(item && item.quantity > 1){
-                item.quantity -= 1
+            if(item && item.cartQuantity > 1){
+                item.cartQuantity -= 1
             }
         }
     }

@@ -1,6 +1,9 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Cart from '../pages/Cart'
 
 const Navbar = () => {
+    const [showCart , setShowCart] = useState<boolean>(false)
   return (
     <div className="fixed top-0 left-0 w-full z-10">
         <div className='flex justify-between w-full items-center h-[10vh] px-12 bg-white'>
@@ -21,10 +24,20 @@ const Navbar = () => {
             </div>
 
             <div className=' flex gap-2 items-center'>
-                <i className="fa-solid fa-cart-shopping mr-[5vh] text-2xl"></i>
+                <i onClick={()=> setShowCart(true)} className="fa-solid fa-cart-shopping mr-[5vh] text-2xl"></i>
                 <Link to='/signup'><button className='border py-1.5 px-2 rounded-md bg-black text-white hover:bg-white hover:text-black transition duration-200'>Sign Up</button></Link>
                 <Link to='/login'><button className='border py-1.5 px-2 rounded-md hover:bg-black hover:text-white transition duration-200'>Login</button></Link>
             </div>
+
+            {
+                showCart && (
+                    <div className='fixed left-0 top-0 z-100 h-screen w-screen backdrop-blur-2xl flex justify-center items-center'>
+                        <div className='' >
+                            <Cart />
+                        </div>
+                    </div>
+                )
+            }
         </div>
     </div>
   )
