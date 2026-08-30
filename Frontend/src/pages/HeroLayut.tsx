@@ -1,6 +1,9 @@
-import ShoePage from './ShoePage'
+
 import KidHero from '../components/KidHero'
 import Hero from '../components/Hero'
+import MaleHome from './MaleHome.'
+import ShoePage from './ShoePage'
+import FemaleShoe from './FemaleShoe'
 
 const HeroLayut = () => {
   return (
@@ -8,8 +11,8 @@ const HeroLayut = () => {
             <Hero />
             <ShoePage />
             <KidHero />
-            <ShoePage />
-            <ShoePage />
+            <FemaleShoe />
+            <MaleHome />
     </div>
   )
 }

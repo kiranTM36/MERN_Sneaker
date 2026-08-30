@@ -4,8 +4,9 @@ import Card from '../components/Card'
 import FilterProduct from './FilterProduct'
 import type { AppDispatch, RootState } from '../store/store'
 import { getProducts } from '../store/productSlice'
+import { Link } from 'react-router-dom'
 
-const FemaleSection = () => {
+const Malesection = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { products, status } = useSelector((state: RootState) => state.product)
 
@@ -14,24 +15,26 @@ const FemaleSection = () => {
   }, [dispatch])
 
   // Filter products where categoryName matches "Female" (case-insensitive check)
-  const femaleProducts = products.filter((item) => {
+  const maleProducts = products.filter((item) => {
     if (typeof item.categoryId === 'object') {
-      return item.categoryId.categoryName.toLowerCase() === 'female'
+      return item.categoryId.categoryName.toLowerCase() === 'male'
     }
     return false
   })
 
   return (
     <div>
-      <h1 className="text-2xl font-bold my-4">Female Section</h1>
-      <FilterProduct name="Female">
+      <h1 className="text-2xl font-bold my-4">Male Section</h1>
+      <FilterProduct name="Male">
         {status === 'loading' ? (
           <p>Loading products...</p>
-        ) : femaleProducts.length === 0 ? (
-          <p>No female products found.</p>
+        ) : maleProducts.length === 0 ? (
+          <p>No Male products found.</p>
         ) : (
-          femaleProducts.map((product) => (
-            <Card key={product._id} product={product} />
+          maleProducts.map((product) => (
+            <Link to={`/product/${product._id}`}>
+                <Card key={product._id} product={product} />
+            </Link>
           ))
         )}
       </FilterProduct>
@@ -39,4 +42,4 @@ const FemaleSection = () => {
   )
 }
 
-export default FemaleSection
+export default Malesection

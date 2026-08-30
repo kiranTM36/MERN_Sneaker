@@ -8,6 +8,7 @@ import ProductPage from "./pages/ProductPage";
 import Login from "./auth/Login";
 import FemaleSection from "./pages/FemaleSection";
 import SingleProduct from "./pages/SingleProduct";
+import Malesection from "./pages/Malesection";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
             <Route index element={<AllProductPage />} />
             <Route path="kids" element={<KidPage />} />
             <Route path="female" element={<FemaleSection />} />
+            <Route path="male" element={<Malesection />} />
             
             <Route path="*/product/:id" element={<SingleProduct />} />
           </Route>
